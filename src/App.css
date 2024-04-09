@@ -1,6 +1,7 @@
 
 * {
   box-sizing: border-box;
+  user-select: none;
   transition: all .3s ease;
 }
 
@@ -8,13 +9,104 @@
   text-align: center;
 }
 
-.wrapper {
-  width: auto;
+.flex {
   display: flex;
   justify-content: center;
+  gap: 8px;
 }
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 688px) {
+  .flex {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stats, .utils {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .keyboard td {
+    width: 25px;
+    height: 40px;
+  }
+
+  td {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.stats, .utils {
+  margin-bottom: 8px;
+  border-radius: 4px;
+  text-align: left;
+  padding: .5em 1em;
+  font-size: 19px;
+  font-weight: bold;
+  background-color: #14151c;
+  color: white;
+  width: 300px;
+}
+
+.stats span {
+  color: gold;
+}
+
+.stats button, .utils button, .utils input {
+  background: #14151c;
+  color: white;
+  border: 2px solid white;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: .5em 1em;
+  margin: 1.5em 1em;
+  cursor: pointer;
+}
+
+.stats .red-button {
+  margin-top: 0;
+}
+
+.stats .red-button, .utils .red-button {
+  border-color: red;
+  color: red;
+}
+
+.stats .red-button:hover, .utils .red-button:hover {
+  background: red;
+  color: white;
+}
+
+.utils h4 {
+  margin: 0;
+}
+
+.utils input {
+  text-transform: none;
+  padding: .5em .3em;
+  margin-bottom: 0;
+}
+
+.utils .red-text {
+  color: red;
+  font-size: 16px;
+}
+
+.stats button:hover, .utils button:hover {
+  color: #14151c;
+  background: white;
+}
+
 td {
-  background-color: dimgrey;
+  background-color: #14151c;
   color: white;
   text-transform: uppercase;
   width: 70px;
@@ -25,7 +117,7 @@ td {
 }
 
 td.pointer {
-  border: 3px solid black;
+  border: 2px dashed white;
 }
 
 td.correct {
@@ -41,10 +133,7 @@ td.incorrect {
 }
 
 .keyboard {
-  margin-top: 18px;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
+  margin-top: 8px;
 }
 
 .keyboard td {
@@ -52,7 +141,6 @@ td.incorrect {
   height: 60px;
   font-size: 22px;
   cursor: pointer;
-  user-select: none;
 }
 
 .keyboard td:hover {

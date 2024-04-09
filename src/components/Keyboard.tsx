@@ -20,13 +20,13 @@ export const Keyboard = ({ onBackspace, onPressed, onEnter, onNewGame, pointer, 
             <table>
                 <tbody>
                 {buttons.map((buttonRow, buttonRowIndex) =>
-                    <tr>
+                    <tr key={buttonRowIndex}>
                         {buttonRow.map((button, buttonIndex) => {
                             if (buttonIndex + 1 === buttonRow.length && buttonRowIndex + 1 === buttons.length)
                                 return <td onClick={() => onBackspace(pointer)} key="backspace"><FaDeleteLeft/></td>
                             else
                                 return <td className={letterStates[button]} onClick={() => onPressed(button, pointer)}
-                                           key={button}>{button}</td>
+                                           key={button === ' ' ? Math.random() : button}>{button}</td>
                         })
                         }
                     </tr>
@@ -37,7 +37,7 @@ export const Keyboard = ({ onBackspace, onPressed, onEnter, onNewGame, pointer, 
                     </td>
                 </tr>
                 <tr>
-                    <td colSpan={10} onClick={() => onNewGame()}>
+                    <td colSpan={10} onClick={onNewGame}>
                         new word
                     </td>
                 </tr>
