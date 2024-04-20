@@ -2,7 +2,7 @@ import {FaDeleteLeft} from "react-icons/fa6";
 import React from "react";
 import {LetterState, PointerState} from "./Table";
 
-const rows = ["qwertyuiop", " asdfghjkl", "  zxcvbnm-"];
+const rows = ["qwertyuiop", "1asdfghjkl", "23zxcvbnm-"];
 const buttons = rows.map(row => row.split(""));
 
 type Props = {
@@ -24,9 +24,11 @@ export const Keyboard = ({ onBackspace, onPressed, onEnter, onNewGame, pointer, 
                         {buttonRow.map((button, buttonIndex) => {
                             if (buttonIndex + 1 === buttonRow.length && buttonRowIndex + 1 === buttons.length)
                                 return <td onClick={() => onBackspace(pointer)} key="backspace"><FaDeleteLeft/></td>
+                            else if(button >= "1" && button <= "3")
+                                return <td key={button}></td>
                             else
                                 return <td className={letterStates[button]} onClick={() => onPressed(button, pointer)}
-                                           key={button === ' ' ? Math.random() : button}>{button}</td>
+                                           key={button}>{button}</td>
                         })
                         }
                     </tr>

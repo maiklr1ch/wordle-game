@@ -8,6 +8,7 @@ import {MainBoard} from "./MainBoard";
 import {Stats} from "./Stats";
 import {getMaxLevelExp} from "../utils/level";
 import {getExportString, getImportData} from "../utils/save";
+import {Debug} from "./Debug";
 
 const WORD_LENGTH = 5;
 const ROW_COUNT = 6;
@@ -74,6 +75,7 @@ export const Table = () => {
     const [isLose, setIsLose] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [keyboardActive, setKeyboardActive] = useState<boolean>(true);
+    const [isDebug, setIsDebug] = useState(false);
     const restartTimer = useRef<number>();
 
     const save: SaveState = {board, stats, isLose, isWin, pointer, correctWord};
@@ -95,6 +97,8 @@ export const Table = () => {
                 handleRestartGame();
             else
             {
+                if(key === "controlright")
+                    setIsDebug(prevState => !prevState);
                 if(key === "backspace")
                     handleBackspace(pointer);
                 if(key === "enter" || key === "numpadenter")
@@ -166,7 +170,7 @@ export const Table = () => {
         }
         catch(e)
         {
-            console.log("Bad stats")
+            console.log("No stats")
             setStats(getEmptyStats());
             handleRestartGame();
         }
@@ -239,11 +243,11 @@ export const Table = () => {
             {
                 setBoard((prevState: Board) => {
                     const nextState = deepCopyBoard(prevState);
-                    const checkWord = nextState[pointer.row].map(cell => cell.letter).join("");
                     nextState[pointer.row].forEach((cell, index) => {
                         if (cell.letter === correctWord[index])
                             cell.state = 'correct';
-                        else if (correctWord.includes(cell.letter)
+                        else if (
+                            correctWord.includes(cell.letter)
                             && correctWord.lastIndexOf(cell.letter) === correctWord.indexOf(cell.letter)
                         )
                             cell.state = 'semi-correct';
@@ -301,9 +305,10 @@ export const Table = () => {
                     <MainBoard board={board} pointer={pointer} onPressed={handleBoardPressed} />
                     <Keyboard onBackspace={handleBackspace} onPressed={handlePressed} onEnter={handleEnter}
                           onNewGame={handleRestartGame} pointer={pointer} letterStates={letterStates}/>
-                    {correctWord}
+                    <Debug isDebug={isDebug} correctWord={correctWord} save={save} />
                 </div>
-                <Stats { ...stats } exportString={getExportString(save)} onImport={importSave} setKeyboardActive={setKeyboardActive} />
+                <Stats {...stats} exportString={getExportString(save)} onImport={importSave}
+                       setKeyboardActive={setKeyboardActive} />
             </div>
             <ToastContainer
                 position="top-center"

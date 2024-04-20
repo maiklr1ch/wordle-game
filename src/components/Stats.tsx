@@ -16,7 +16,7 @@ export const Stats = ({ level, exp, correct, wrong, exportString, onImport, setK
 
     useEffect(() => {
         setKeyboardActive(activeUtil === undefined);
-    }, [activeUtil]);
+    }, [setKeyboardActive, activeUtil]);
 
     const handleImport = () => {
         localStorage.setItem("data", importData);
@@ -80,7 +80,7 @@ export const Stats = ({ level, exp, correct, wrong, exportString, onImport, setK
         </div>;
 
     return (
-        <div>
+        <div className="side-panel">
             <div className="stats">
                 Your level is <span>{level}</span><br/>
                 Your experience is <span>{exp}/{getMaxLevelExp(level)}</span><br/>
@@ -93,6 +93,5 @@ export const Stats = ({ level, exp, correct, wrong, exportString, onImport, setK
 
             {utilsPanel}
         </div>
-
     );
 };
